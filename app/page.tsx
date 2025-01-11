@@ -1,101 +1,93 @@
+"use client";
+
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import Image from "next/image";
+import Loading from "@/components/Loading";
 
 export default function Home() {
-  return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by creating now{" "} 
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              app/page.tsx
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
+  const router = useRouter();
+  const [loading, setLoading] = useState(true);
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+  useEffect(() => {
+    const handleRouteChange = () => {
+      setLoading(true);
+    };
+
+    const handleRouteComplete = () => {
+      setTimeout(() => {
+        setLoading(false);
+      }, 99000);
+    };
+
+    const originalPush = router.push;
+    router.push = (url, options) => {
+      handleRouteChange();
+      return Promise.resolve(originalPush(url, options)).finally(handleRouteComplete);
+    };
+
+    return () => {
+      router.push = originalPush;
+    };
+  }, [router]);
+
+  useEffect(() => {
+    const handleClick = () => {
+      router.push("/login-signup");
+    };
+
+    window.addEventListener("mousedown", handleClick);
+    return () => {
+      window.removeEventListener("mousedown", handleClick);
+    };
+  }, [router]);
+
+  useEffect(() => {
+    setLoading(false);
+  }, []);
+
+  return (
+    <div>
+      {loading && <Loading />}
+      <div className="background" style={{ position: "relative", width: "100%", height: "100vh"}}>
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", position: "absolute", width: "100%", height: "10%", zIndex: 1, padding: "0 20px" }}>
+          <div style={{ display: "flex", alignItems: "center" }}>
+            <Image src='/favicon.ico' width={50} height={50} quality={100} alt="logo"/>
+            <span style={{ marginLeft: "10px", fontSize: "1.5rem" }} className="logotext">vertex.</span>
+          </div>
+          <button style={{ padding: "10px 20px"}} className="start_button">get started</button>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+        <div className="ticker-container">
+          <div className="ticker">
+            {["Efficiency", "Output", "Performance", "Effectiveness", "Proficiency", "Workrate", "Yield", "Capability", "Throughput", "Competence", "Result", "Accomplishment", "Workload", "Produciveness", "Production", "Capacity", "Achievement", "Return", "Excellence", "Success"].map((word, index) => (
+              <span key={index}>{word}</span>
+            ))}
+            {["Efficiency", "Output", "Performance", "Effectiveness", "Proficiency", "Workrate", "Yield", "Capability", "Throughput", "Competence", "Result", "Accomplishment", "Workload", "Produciveness", "Production", "Capacity", "Achievement", "Return", "Excellence", "Success"].map((word, index) => (
+              <span key={index + 20}>{word}</span>
+            ))}
+          </div>
+        </div>
+        <div className="ticker-container-2">
+          <div className="ticker">
+            {["Efficiency", "Output", "Performance", "Effectiveness", "Proficiency", "Workrate", "Yield", "Capability", "Throughput", "Competence", "Result", "Accomplishment", "Workload", "Produciveness", "Production", "Capacity", "Achievement", "Return", "Excellence", "Success"].map((word, index) => (
+              <span key={index}>{word}</span>
+            ))}
+            {["Efficiency", "Output", "Performance", "Effectiveness", "Proficiency", "Workrate", "Yield", "Capability", "Throughput", "Competence", "Result", "Accomplishment", "Workload", "Produciveness", "Production", "Capacity", "Achievement", "Return", "Excellence", "Success"].map((word, index) => (
+              <span key={index + 20}>{word}</span>
+            ))}
+          </div>
+        </div>
+        <div style={{ position: "relative", zIndex: 2, width: "100%", height: "100%", display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center" }}>
+          <h1 className="title" style={{transform: "translate(-50%, -50%)", zIndex: 2}}>student life is hard, <br/> not anymore.</h1>
+          <div style={{ zIndex: 2, display: 'flex', flexDirection: 'column', justifyContent: 'center',  alignItems: "center"}} className="startscroll">
+            <div>click anywhere to get started</div>
+            <Image src="/favicon.ico" width={25} height={25} alt="click" style={{ paddingTop: 10}} className="clicker"/>
+          </div>
+        </div>
+        <p className="watermark">
+          An <a href="https://github.com/pratyushV-l/vertex">open source</a> venture by <a href="https://github.com/pratyushV-l/vertex">422 Unproccessable Entity</a>.
+        </p>
+      </div>
     </div>
   );
 }
