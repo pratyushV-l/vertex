@@ -25,11 +25,11 @@ export default function AIquerybot() {
   };
 
   return (
-    <div className="AIquerybot">
+    <div className="ai-querybot-container">
       <h1 className="bot-heading">AI Query Bot</h1>
-      <h1 className="entry-statement">
+      <p className="entry-statement">
         Welcome to Query Bot. I will answer your questions. Do not hesitate to ask me your queries!
-      </h1>
+      </p>
       <input
         type="text"
         placeholder="Ask your question here"
@@ -37,7 +37,7 @@ export default function AIquerybot() {
         value={question}
         onChange={handleInputChange}
       />
-      <button onClick={handleSubmit}>Submit</button>
+      <button className="submit-button" onClick={handleSubmit}>Submit</button>
       <p className="answer">Answer: {answer}</p>
     </div>
   );

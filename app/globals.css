@@ -392,7 +392,7 @@ text-shadow:
 
 .bot-heading {
   display: flex;
-  font-size: 2rem;
+  font-size: 3rem;
   font-family: 'Bree Serif', serif;
   color: #202020;
   position: absolute;
@@ -445,4 +445,59 @@ text-shadow:
   text-align: center;
   padding-left: 300px;
   padding-right: 300px;
+}
+
+.ai-querybot-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background-color: var(--background);
+  color: var(--foreground);
+  font-family: 'Bree Serif', serif;
+  padding: 2rem;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+}
+
+.entry-statement {
+  font-size: 1.2rem;
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.question-box {
+  width: 80%;
+  padding: 0.5rem;
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  border: 1px solid var(--foreground);
+  border-radius: 5px;
+  box-shadow: 1.4px 1.4px 0 #00B4D8, 1.7px 1.7px 0 #00B4D8, 2.1px 2.1px 0 #00B4D8, 2.4px 2.4px 0 #00B4D8, 2.8px 2.8px 0 #00B4D8;
+}
+
+.submit-button {
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  font-family: 'Bree Serif', serif;
+  border: 1px solid var(--foreground);
+  border-radius: 5px;
+  background-color: var(--foreground);
+  color: #00B4D8;
+  cursor: pointer;
+  box-shadow: 1.4px 1.4px 0 #00B4D8, 1.7px 1.7px 0 #00B4D8, 2.1px 2.1px 0 #00B4D8, 2.4px 2.4px 0 #00B4D8, 2.8px 2.8px 0 #00B4D8;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.submit-button:hover {
+  background-color: #00B4D8;
+  color: var(--foreground);
+}
+
+.answer {
+  margin-top: 2rem;
+  font-size: 1.2rem;
+  text-align: center;
+  text-shadow: 0.2px 0.2px 0 #00B4D8, 0.4px 0.4px 0 #00B4D8, 0.6px 0.6px 0 #00B4D8, 0.8px 0.8px 0 #00B4D8, 1.0px 1.0px 0 #00B4D8;
 }
