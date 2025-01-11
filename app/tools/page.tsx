@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React from 'react';
 import Meditation from '@/components/Meditation';
 import Quote from '@/components/Quote';
 import Timer from '@/components/Timer';
