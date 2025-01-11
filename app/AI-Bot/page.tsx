@@ -18,7 +18,8 @@ export default function AIquerybot() {
       const genAI = new GoogleGenerativeAI("AIzaSyDkyivo4KBcmjJN_ZB2qq7_1II34IAI_uk");
       const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 
-      const result = await model.generateContent(question);
+      const prompt = `You are an educational chatbot. Remember to answer in a suitable manner, and only answer somewhat relatated questions to education. Refuse to answer questions not related to education. Never give direct answer, rather, always provide explanation. Answer the following question in a clear and concise manner suitable for a student: ${question}`;
+      const result = await model.generateContent(prompt);
       setAnswer(result.response.text());
     } catch (error) {
       console.error("Error fetching the answer:", error);
@@ -36,13 +37,15 @@ export default function AIquerybot() {
 
   return (
     <div className="ai-querybot-container">
-      <h1 className="bot-heading">AI Query Bot</h1>
+      <div className="triangle top-left"></div>
+      <div className="triangle bottom-right"></div>
+      <h1 className="bot-heading">Educational AI Query Bot</h1>
       <p className="entry-statement">
-        Welcome to Query Bot. I will answer your questions. Do not hesitate to ask me your queries!
+        Welcome to the Educational Query Bot. Don't hesitate to ask any question you have.
       </p>
       <input
         type="text"
-        placeholder="Ask your question here"
+        placeholder="Ask your educational question here"
         className="question-box"
         value={question}
         onChange={handleInputChange}

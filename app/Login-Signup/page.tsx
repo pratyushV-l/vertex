@@ -85,6 +85,26 @@ export default function LoginSignupPage() {
         </form>
         <img src="/favicon.ico" alt="Favicon" className="favicon-image" />
       </div>
+      <div className="ticker-container-3">
+          <div className="ticker">
+            {["Efficiency", "Output", "Performance", "Effectiveness", "Proficiency", "Workrate", "Yield", "Capability", "Throughput", "Competence", "Result", "Accomplishment", "Workload", "Produciveness", "Production", "Capacity", "Achievement", "Return", "Excellence", "Success"].map((word, index) => (
+              <span key={index}>{word}</span>
+            ))}
+            {["Efficiency", "Output", "Performance", "Effectiveness", "Proficiency", "Workrate", "Yield", "Capability", "Throughput", "Competence", "Result", "Accomplishment", "Workload", "Produciveness", "Production", "Capacity", "Achievement", "Return", "Excellence", "Success"].map((word, index) => (
+              <span key={index + 20}>{word}</span>
+            ))}
+          </div>
+        </div>
+        <div className="ticker-container-4">
+          <div className="ticker">
+            {["Efficiency", "Output", "Performance", "Effectiveness", "Proficiency", "Workrate", "Yield", "Capability", "Throughput", "Competence", "Result", "Accomplishment", "Workload", "Produciveness", "Production", "Capacity", "Achievement", "Return", "Excellence", "Success"].map((word, index) => (
+              <span key={index}>{word}</span>
+            ))}
+            {["Efficiency", "Output", "Performance", "Effectiveness", "Proficiency", "Workrate", "Yield", "Capability", "Throughput", "Competence", "Result", "Accomplishment", "Workload", "Produciveness", "Production", "Capacity", "Achievement", "Return", "Excellence", "Success"].map((word, index) => (
+              <span key={index + 20}>{word}</span>
+            ))}
+          </div>
+        </div>
     </div>
   );
 }

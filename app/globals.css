@@ -44,6 +44,7 @@
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
   width: 100%;
   max-width: 400px;
+  overflow-x: hidden;
   margin: auto;
   transition: transform 0.3s ease-in-out;
 }
@@ -62,7 +63,7 @@
     3.5px 3.5px 0 var(--accent), 
     4.5px 4.5px 0 var(--accent);
   margin-top: 2rem;
-  margin-bottom: 1rem;
+  margin-bottom: -2.0rem;
 }
 
 .login-form {
@@ -122,7 +123,7 @@
 .favicon-image {
   display: flex;
   align-items: center;
-  margin-top: 2rem;
+  margin-top: 0.5rem;
   width: 50px;
   height: 50px;
   transition: transform 0.3s ease-in-out;
@@ -135,7 +136,7 @@
 .social-login-buttons {
   display: flex;
   flex-direction: row;
-  gap: 1rem;
+  gap: 0.5rem;
 }
 
 body, html {
@@ -146,6 +147,36 @@ body, html {
   overflow-x: hidden;
   overflow-y: auto;
 }
+
+:root {
+  --triangle-gradient: linear-gradient(to bottom right, #00B4D8, #0c8dd3);
+}
+
+.triangle {
+  width: 0;
+  height: 0;
+  border-style: solid;
+  position: absolute;
+}
+
+.top-left {
+  width: 300px;
+  height: 300px;
+  background: var(--triangle-gradient);
+  clip-path: polygon(0 0, 100% 0, 0 100%);
+  top: 0;
+  left: 0;
+}
+
+.bottom-right {
+  width: 300px;
+  height: 300px;
+  background: var(--triangle-gradient);
+  clip-path: polygon(100% 100%, 0 100%, 100% 0);
+  bottom: 0;
+  right: 0;
+}
+
 
 .title {
   font-size: 4.5em;
@@ -232,6 +263,22 @@ body, html {
 .ticker-container-2 {
   position: absolute;
   top: 81.28%;
+  width: 100%;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.ticker-container-3 {
+  position: absolute;
+  top: 95.28%;
+  width: 100%;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.ticker-container-4 {
+  position: absolute;
+  top: 00.28%;
   width: 100%;
   overflow: hidden;
   white-space: nowrap;
