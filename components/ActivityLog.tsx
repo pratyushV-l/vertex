@@ -3,120 +3,126 @@ import React, { useState } from "react";
 const ActivityLog = ({ buttonColor }: { buttonColor: string }) => {
   const [logs, setLogs] = useState<{ log: string; timestamp: string }[]>([]);
   const [newLog, setNewLog] = useState<string>("");
-  const [isEditing, setIsEditing] = useState<boolean>(false);
   const [editIndex, setEditIndex] = useState<number | null>(null);
 
-  const addLog = () => {
+  const handleLog = () => {
     if (newLog.trim()) {
-      const timestamp = new Date().toLocaleString();
-      setLogs([{ log: newLog, timestamp }, ...logs]);
-      setNewLog("");
-    }
-  };
-
-  const editLog = () => {
-    if (newLog.trim() && editIndex !== null) {
-      const updatedLogs = logs.map((log, index) =>
-        index === editIndex ? { ...log, log: newLog } : log
-      );
+      const updatedLogs = editIndex !== null
+        ? logs.map((log, index) => index === editIndex ? { ...log, log: newLog } : log)
+        : [{ log: newLog, timestamp: new Date().toLocaleString() }, ...logs];
       setLogs(updatedLogs);
       setNewLog("");
-      setIsEditing(false);
       setEditIndex(null);
     }
   };
 
   const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
-    if (event.key === "Enter") {
-      if (isEditing) {
-        editLog();
-      } else {
-        addLog();
-      }
-    }
-  };
-
-  const deleteLog = (index: number) => {
-    setLogs(logs.filter((_, i) => i !== index));
-  };
-
-  const startEditing = (index: number) => {
-    setNewLog(logs[index].log);
-    setIsEditing(true);
-    setEditIndex(index);
+    if (event.key === "Enter") handleLog();
   };
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '20px' }}>
-      <h2 style={{ textAlign: 'center', marginBottom: '20px' }}>Activity Log</h2>
+    <div style={styles.container}>
+      <h2 style={styles.title}>Activity Log</h2>
       <input
         type="text"
         value={newLog}
         onChange={(e) => setNewLog(e.target.value)}
         onKeyDown={handleKeyDown}
         placeholder="Enter new activity"
-        style={{
-          width: "100%",
-          padding: "10px",
-          fontSize: "16px",
-          color: "black",
-          marginBottom: "10px",
-          borderRadius: "5px",
-          border: "1px solid #ccc",
-        }}
+        style={styles.input}
       />
       <button
-        onClick={isEditing ? editLog : addLog}
-        style={{
-          padding: "10px 20px",
-          fontSize: "16px",
-          color: "#262626",
-          backgroundColor: buttonColor,
-          border: "none",
-          borderRadius: "5px",
-          cursor: "pointer",
-          marginBottom: "20px",
-          marginTop: "15px",
-          transition: "background-color 1s, color 1s",
-        }}
+        onClick={handleLog}
+        style={{ ...styles.button, backgroundColor: buttonColor }}
       >
-        {isEditing ? "Edit Log" : "Add Log"}
+        {editIndex !== null ? "Edit Log" : "Add Log"}
       </button>
-      <ul>
+      <ul style={styles.list}>
         {logs.map((log, index) => (
-          <li key={index} style={{ marginBottom: "10px", fontSize: "18px", display: "flex", alignItems: "center" }}>
-            {log.log} <span style={{ fontSize: "12px", color: "#888", marginLeft: "10px" }}>({log.timestamp})</span>
-            <button
-              onClick={() => startEditing(index)}
-              style={{
-                marginLeft: "10px",
-                background: "none",
-                border: "none",
-                color: "#FFD392",
-                cursor: "pointer",
-                fontSize: "16px",
-              }}
-            >
-              ✎
-            </button>
-            <button
-              onClick={() => deleteLog(index)}
-              style={{
-                marginLeft: "10px",
-                background: "none",
-                border: "none",
-                color: "#FF929F",
-                cursor: "pointer",
-                fontSize: "16px",
-              }}
-            >
-              ✖
-            </button>
+          <li key={index} style={styles.listItem}>
+            <span>{log.log} <span style={styles.timestamp}>({log.timestamp})</span></span>
+            <div>
+              <button onClick={() => { setNewLog(log.log); setEditIndex(index); }} style={styles.editButton}>✎</button>
+              <button onClick={() => setLogs(logs.filter((_, i) => i !== index))} style={styles.deleteButton}>✖</button>
+            </div>
           </li>
         ))}
       </ul>
     </div>
   );
+};
+
+const styles: { [key: string]: React.CSSProperties } = {
+  container: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    padding: '20px',
+    color: 'var(--foreground)',
+    backgroundColor: 'rgba(255, 255, 255, 0.25)',
+    backdropFilter: 'blur(10px)',
+    borderRadius: '16px',
+    boxShadow: '0 8px 32px rgba(0, 0, 0, 0.1)',
+  },
+  title: {
+    textAlign: 'center',
+    marginBottom: '20px',
+    fontSize: '1.5rem',
+    fontFamily: 'Bree Serif, serif',
+  },
+  input: {
+    width: "100%",
+    padding: "10px",
+    fontSize: "16px",
+    marginBottom: "10px",
+    borderRadius: "8px",
+    border: "1px solid #ccc",
+    backgroundColor: "var(--background)",
+    color: "var(--foreground)",
+  },
+  button: {
+    padding: "10px 20px",
+    fontSize: "16px",
+    color: "var(--foreground)",
+    border: "none",
+    borderRadius: "8px",
+    cursor: "pointer",
+    marginBottom: "20px",
+    marginTop: "15px",
+    transition: "background-color 0.3s, color 0.3s",
+  },
+  list: {
+    width: "100%",
+    listStyle: "none",
+    padding: 0,
+  },
+  listItem: {
+    marginBottom: "10px",
+    fontSize: "18px",
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "center",
+  },
+  timestamp: {
+    fontSize: "12px",
+    color: "#888",
+  },
+  editButton: {
+    marginLeft: "10px",
+    background: "none",
+    border: "none",
+    color: "var(--accent)",
+    cursor: "pointer",
+    fontSize: "16px",
+  },
+  deleteButton: {
+    marginLeft: "10px",
+    background: "none",
+    border: "none",
+    color: "#FF929F",
+    cursor: "pointer",
+    fontSize: "16px",
+  },
 };
 
 export default ActivityLog;
