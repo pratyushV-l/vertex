@@ -1,8 +1,25 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, ComponentType } from "react";
 import { GoogleGenerativeAI } from "@google/generative-ai";
+import { useRouter } from 'next/router';
 import withAuth from '@/src/hoc/withAuth';
+
+const withLocalAuth = <P extends object>(WrappedComponent: ComponentType<P>): ComponentType<P> => {
+  const ComponentWithAuth = (props: P) => {
+    const router = useRouter();
+    const isAuthenticated = true; 
+
+    if (!isAuthenticated) {
+      router.push('/login');
+      return null;
+    }
+
+    return <WrappedComponent {...props} />;
+  };
+
+  return ComponentWithAuth;
+};
 
 function AIquerybot() {
   const [question, setQuestion] = useState("");
