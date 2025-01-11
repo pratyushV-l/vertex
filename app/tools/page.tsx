@@ -10,7 +10,6 @@ import HabitTracker from '@/components/HabitTracker';
 import Image from 'next/image';
 
 const Page = () => {
-  const [showStickyNotes, setShowStickyNotes] = useState(false);
 
   return (
     <div style={styles.container}>
@@ -97,16 +96,6 @@ const styles: { [key: string]: React.CSSProperties } = {
     padding: '20px',
     borderRadius: '16px',
     boxShadow: '0 8px 32px rgba(0, 0, 0, 0.1)',
-  },
-  stickyNotesButton: {
-    padding: '10px 20px',
-    backgroundColor: 'var(--foreground)',
-    color: 'var(--accent)',
-    border: 'none',
-    borderRadius: '8px',
-    cursor: 'pointer',
-    fontSize: '16px',
-    transition: 'background-color 0.3s ease-in-out, transform 0.3s ease-in-out',
   },
   footer: {
     marginTop: '20px',

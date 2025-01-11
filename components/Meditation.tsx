@@ -12,7 +12,7 @@ const Meditation: React.FC<MeditationProps> = ({ buttonColor }) => {
   const [started, setStarted] = useState(false);
   const [isInhale, setIsInhale] = useState(true);
   const [animationTime, setAnimationTime] = useState(0);
-  const [elapsedTime, setElapsedTime] = useState(0);
+  const [, setElapsedTime] = useState(0);
 
   useEffect(() => {
     if (started) setAnimationTime(((totalTime * 60 * 1000) / breaths) / 2);
