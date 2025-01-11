@@ -1,9 +1,10 @@
 import { useRouter } from 'next/navigation';
-import { useEffect } from 'react';
+import { JSX, useEffect } from 'react';
 import Cookies from 'js-cookie';
+import React from 'react';
 
 const withAuth = (WrappedComponent: React.ComponentType) => {
-  return (props: any) => {
+  const ComponentWithAuth = (props: JSX.IntrinsicAttributes) => {
     const router = useRouter();
 
     useEffect(() => {
@@ -16,6 +17,10 @@ const withAuth = (WrappedComponent: React.ComponentType) => {
 
     return <WrappedComponent {...props} />;
   };
+
+  ComponentWithAuth.displayName = `WithAuth(${WrappedComponent.displayName || WrappedComponent.name || 'Component'})`;
+
+  return ComponentWithAuth;
 };
 
 export default withAuth;
