@@ -501,5 +501,11 @@ text-shadow:
   margin-top: 2rem;
   font-size: 1.2rem;
   text-align: center;
+  position: absolute;
+  left: 50%;
+  width: 105%;
+  max-height: 50%;
+  overflow-y: auto;
+  transform: translateX(-50%);
   text-shadow: 0.2px 0.2px 0 #00B4D8, 0.4px 0.4px 0 #00B4D8, 0.6px 0.6px 0 #00B4D8, 0.8px 0.8px 0 #00B4D8, 1.0px 1.0px 0 #00B4D8;
 }
