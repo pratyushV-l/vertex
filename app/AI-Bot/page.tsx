@@ -41,7 +41,7 @@ export default function AIquerybot() {
       <div className="triangle bottom-right"></div>
       <h1 className="bot-heading">Educational AI Query Bot</h1>
       <p className="entry-statement">
-        Welcome to the Educational Query Bot. Don't hesitate to ask any question you have.
+        Welcome to the Educational Query Bot. Do not hesitate to ask any question you have.
       </p>
       <input
         type="text"
