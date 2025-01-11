@@ -5,8 +5,8 @@ import { GoogleGenerativeAI } from "@google/generative-ai";
 
 export default function AIquerybot() {
   const [question, setQuestion] = useState("");
-  const [answer, setAnswer] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
+  const [, setAnswer] = useState("");
+  const [, setIsLoading] = useState(false);
   const [conversationHistory, setConversationHistory] = useState<string[]>([]);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
