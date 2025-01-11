@@ -508,6 +508,38 @@ text-shadow:
   border-radius: 10px;
 }
 
+.chat-history {
+  width: 100%;
+  max-width: 600px;
+  height: 400px;
+  overflow-y: auto;
+  border: 1px solid var(--foreground);
+  padding: 10px;
+  margin-bottom: 20px;
+  margin-top: 80px;
+  background-color: var(--background);
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.student-message {
+  text-align: right;
+  background-color: var(--accent);
+  padding: 10px;
+  border-radius: 10px;
+  margin: 5px 0;
+  color: var(--foreground);
+}
+
+.bot-message {
+  text-align: left;
+  background-color: #fff;
+  padding: 10px;
+  border-radius: 10px;
+  margin: 5px 0;
+  color: var(--foreground);
+}
+
 .entry-statement {
   font-size: 1.2rem;
   margin-bottom: 2rem;
@@ -521,7 +553,7 @@ text-shadow:
   margin-bottom: 1rem;
   border: 1px solid var(--foreground);
   border-radius: 5px;
-  box-shadow: 1.4px 1.4px 0 #00B4D8, 1.7px 1.7px 0 #00B4D8, 2.1px 2.1px 0 #00B4D8, 2.4px 2.4px 0 #00B4D8, 2.8px 2.8px 0 #00B4D8;
+  box-shadow: 1.4px 1.4px 0 var(--accent), 1.7px 1.7px 0 var(--accent), 2.1px 2.1px 0 var(--accent), 2.4px 2.4px 0 var(--accent), 2.8px 2.8px 0 var(--accent);
 }
 
 .submit-button {
@@ -531,16 +563,16 @@ text-shadow:
   border: 1px solid var(--foreground);
   border-radius: 5px;
   background-color: var(--foreground);
-  color: #00B4D8;
+  color: var(--background);
   cursor: pointer;
-  box-shadow: 1.4px 1.4px 0 #00B4D8, 1.7px 1.7px 0 #00B4D8, 2.1px 2.1px 0 #00B4D8, 2.4px 2.4px 0 #00B4D8, 2.8px 2.8px 0 #00B4D8;
+  box-shadow: 1.4px 1.4px 0 var(--accent), 1.7px 1.7px 0 var(--accent), 2.1px 2.1px 0 var(--accent), 2.4px 2.4px 0 var(--accent), 2.8px 2.8px 0 var(--accent);
   transition: background-color 0.3s, color 0.3s;
   position: absolute;
   top: 92.5%;
 }
 
 .submit-button:hover {
-  background-color: #00B4D8;
+  background-color: var(--accent);
   color: var(--foreground);
 }
 
@@ -554,5 +586,5 @@ text-shadow:
   max-height: 50%;
   overflow-y: auto;
   transform: translateX(-50%);
-  text-shadow: 0.2px 0.2px 0 #00B4D8, 0.4px 0.4px 0 #00B4D8, 0.6px 0.6px 0 #00B4D8, 0.8px 0.8px 0 #00B4D8, 1.0px 1.0px 0 #00B4D8;
+  text-shadow: 0.2px 0.2px 0 var(--accent), 0.4px 0.4px 0 var(--accent), 0.6px 0.6px 0 var(--accent), 0.8px 0.8px 0 var(--accent), 1.0px 1.0px 0 var(--accent);
 }

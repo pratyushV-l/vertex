@@ -7,6 +7,7 @@ export default function AIquerybot() {
   const [question, setQuestion] = useState("");
   const [answer, setAnswer] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [conversationHistory, setConversationHistory] = useState<string[]>([]);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setQuestion(e.target.value);
@@ -18,9 +19,13 @@ export default function AIquerybot() {
       const genAI = new GoogleGenerativeAI("AIzaSyDkyivo4KBcmjJN_ZB2qq7_1II34IAI_uk");
       const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 
-      const prompt = `You are an educational chatbot. Remember to answer in a suitable manner, and only answer somewhat relatated questions to education. Refuse to answer questions not related to education. Never give direct answer, rather, always provide explanation. Answer the following question in a clear and concise manner suitable for a student: ${question}`;
+      const history = conversationHistory.join("\n");
+      const prompt = `You are an educational chatbot. Remember to answer in a suitable manner, and only answer somewhat related questions to education. Refuse to answer questions not related to education. Never give direct answer, rather, always provide explanation. Keeping this in mind, still make sure most responses are under 6 lines, to promote ease of read. Remember, only study related queries. Provide all answer in plain text and not markdown. Here is the conversation history:\n${history}\nStudent: ${question}\nChatbot:`;
       const result = await model.generateContent(prompt);
-      setAnswer(result.response.text());
+      const newAnswer = result.response.text();
+
+      setAnswer(newAnswer);
+      setConversationHistory([...conversationHistory, `Student: ${question}`, `Chatbot: ${newAnswer}`]);
     } catch (error) {
       console.error("Error fetching the answer:", error);
       setAnswer("Sorry, I couldn't fetch the answer. Please try again.");
@@ -43,6 +48,13 @@ export default function AIquerybot() {
       <p className="entry-statement">
         Welcome to the Educational Query Bot. Do not hesitate to ask any question you have.
       </p>
+      <div className="chat-history">
+        {conversationHistory.map((entry, index) => (
+          <p key={index} className={entry.startsWith("Student:") ? "student-message" : "bot-message"}>
+            {entry}
+          </p>
+        ))}
+      </div>
       <input
         type="text"
         placeholder="Ask your educational question here"
@@ -52,9 +64,6 @@ export default function AIquerybot() {
         onKeyDown={handleKeyDown}
       />
       <button className="submit-button" onClick={handleSubmit}>Submit</button>
-      <p className="answer">
-        {isLoading ? "Loading..." : `Answer: ${answer}`}
-      </p>
     </div>
   );
 }
