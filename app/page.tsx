@@ -33,7 +33,7 @@ export default function Home() {
 
   useEffect(() => {
     const handleClick = () => {
-      router.push("/login-signup");
+      router.push("/Login-Signup");
     };
 
     window.addEventListener("mousedown", handleClick);
