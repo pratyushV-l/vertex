@@ -1,5 +1,3 @@
-import react from 'react';
-
 export default function Homepage() {
   return (
     <div className="Home-page">
