@@ -1,70 +1,62 @@
 "use client";
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { GoogleGenerativeAI } from "@google/generative-ai";
 
 const StudyPlanner = () => {
-  const [pdfContent, setPdfContent] = useState<string | null>(null);
-  const [downloadUrl, setDownloadUrl] = useState<string | null>(null);
+  const [fileContents, setFileContents] = useState<string[]>([]);
+  const [responseContent, setResponseContent] = useState<string>("");
+  const [isLoading, setIsLoading] = useState(false);
 
-  useEffect(() => {
-    const handleDownload = async () => {
-      if (!pdfContent) return;
+  const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = e.target.files;
+    if (files) {
+      const readers = Array.from(files).map(file => {
+        return new Promise<string>((resolve, reject) => {
+          const reader = new FileReader();
+          reader.onload = (event) => {
+            resolve(event.target?.result as string);
+          };
+          reader.onerror = reject;
+          reader.readAsText(file);
+        });
+      });
 
+      Promise.all(readers)
+        .then(contents => setFileContents(contents))
+        .catch(error => console.error("Error reading files:", error));
+    }
+  };
+
+  const handleDownload = async () => {
+    if (fileContents.length === 0) return;
+
+    setIsLoading(true);
+    try {
       const genAI = new GoogleGenerativeAI("AIzaSyDkyivo4KBcmjJN_ZB2qq7_1II34IAI_uk");
       const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 
-      const prompt = `Analyze the following PDF content and create a study guide: ${pdfContent}`;
-
+      const combinedContent = fileContents.join("\n");
+      const prompt = `You are an educational assistant. Please provide a detailed study plan based on the following content:\n${combinedContent}`;
       const result = await model.generateContent(prompt);
-      const studyGuide = await result.response.text();
+      const newResponse = result.response.text();
 
-      // Create a Blob from the response
-      const blob = new Blob([studyGuide], { type: 'text/tsx' });
+      setResponseContent(newResponse);
+
+      // Create a blob from the response content
+      const blob = new Blob([newResponse], { type: 'text/plain' });
       const url = URL.createObjectURL(blob);
-      setDownloadUrl(url);
 
-      // Simulate loading bar
-      let progress = 0;
-      const loadingBar = document.querySelector('.loading-bar') as HTMLElement;
-      const interval = setInterval(() => {
-        progress += 10;
-        if (loadingBar) {
-          loadingBar.style.width = `${progress}%`;
-        }
-        if (progress >= 100) {
-          clearInterval(interval);
-        }
-      }, 100);
-
-      setTimeout(() => {
-        clearInterval(interval);
-        if (loadingBar) {
-          loadingBar.style.width = '100%';
-        }
-      }, 1000);
-    };
-
-    const downloadButton = document.querySelector('.download-button');
-    if (downloadButton) {
-      downloadButton.addEventListener('click', handleDownload);
-    }
-
-    return () => {
-      if (downloadButton) {
-        downloadButton.removeEventListener('click', handleDownload);
-      }
-    };
-  }, [pdfContent]);
-
-  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        const content = e.target?.result as string;
-        setPdfContent(content);
-      };
-      reader.readAsText(file);
+      // Create a temporary link to trigger the download
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = 'study_plan.txt';
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    } catch (error) {
+      console.error("Error generating the study plan:", error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -72,19 +64,14 @@ const StudyPlanner = () => {
     <div className="study-planner-container">
       <h1 className="study-heading">Study Planner</h1>
       <div className="drag-drop-box">
-        <p>Drag and drop your files here</p>
-        <input type="file" accept=".pdf" onChange={handleFileChange} />
+        <p>Upload your .txt files here</p>
+        <input type="file" accept=".txt" multiple onChange={handleFileUpload} />
       </div>
-      <button className="download-button">
-        Download
+      <button className="download-button" onClick={handleDownload} disabled={isLoading}>
+        {isLoading ? "Generating..." : "Download"}
       </button>
-      {downloadUrl && (
-        <a href={downloadUrl} download="study-guide.tsx">
-          Click here to download your study guide
-        </a>
-      )}
       <div className="loading-bar-container">
-        <div className="loading-bar"></div>
+        <div className="loading-bar" style={{ width: isLoading ? '100%' : '0%' }}></div>
       </div>
     </div>
   );

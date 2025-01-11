@@ -658,6 +658,76 @@ text-shadow:
   background-color: #e0e0e0;
 }
 
+.calendar-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  background-color: var(--background);
+  color: var(--foreground);
+  font-family: 'Bree Serif', serif;
+}
+
+.calendar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  background-color: var(--foreground);
+  color: var(--background);
+}
+
+.calendar-body {
+  flex: 1;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.event {
+  padding: 1rem;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.event.low {
+  background-color: rgba(0, 255, 0, 0.3);
+}
+
+.event.medium {
+  background-color: rgba(255, 255, 0, 0.3);
+}
+
+.event.high {
+  background-color: rgba(255, 0, 0, 0.3);
+}
+
+.popup {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: var(--background);
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.popup textarea {
+  width: 100%;
+  height: 100px;
+  margin-bottom: 1rem;
+}
+
+.popup button {
+  padding: 0.5rem 1rem;
+  background-color: var(--foreground);
+  color: var(--background);
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
 .loading-bar {
   height: 100%;
   background-color: #00B4D8;
