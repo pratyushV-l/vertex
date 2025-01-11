@@ -22,23 +22,47 @@
   flex-direction: column;
   align-items: center; 
   justify-content: center;
-  background-color: #ffffff;
+  background-color: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(10px);
   color: #000000;
   font-family: 'Bree Serif', serif;
   height: 100vh;
+  padding: 2rem;
+  border-radius: 16px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+}
+
+.login-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.25);
+  backdrop-filter: blur(10px);
+  padding: 2rem;
+  border-radius: 16px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 400px;
+  margin: auto;
+  transition: transform 0.3s ease-in-out;
+}
+
+.login-container:hover {
+  transform: scale(1.05);
 }
 
 .login-heading {
-  font-size: 2rem;
+  font-size: 2.5rem;
   color: #000000;
-  border-radius: 50;  
   text-shadow: 
     0.5px 0.5px 0 var(--accent), 
     1.5px 1.5px 0 var(--accent), 
     2.5px 2.5px 0 var(--accent), 
     3.5px 3.5px 0 var(--accent), 
     4.5px 4.5px 0 var(--accent);
-  margin-bottom: 2rem;
+  margin-top: 2rem;
+  margin-bottom: 1rem;
 }
 
 .login-form {
@@ -49,38 +73,71 @@
 }
 
 .login-input {
-  padding: 0.5rem;
+  padding: 0.75rem;
   border: 1px solid #ccc;
-  border-radius: 4px;
+  border-radius: 8px;
+  width: 100%;
+  transition: border-color 0.3s ease-in-out;
 }
 
-.login-button {
-  padding: 0.5rem;
+.login-input:focus {
+  border-color: #00B4D8;
+  outline: none;
+}
+
+.login-button, .create-account {
+  padding: 0.75rem;
   border: none;
-  border-radius: 4px;
-  background-color: #8ECAE6;
+  border-radius: 8px;
+  background-color: #00B4D8;
   color: #000000;
   cursor: pointer;
+  transition: background-color 0.3s ease-in-out, transform 0.3s ease-in-out;
+}
+
+.login-button:hover, .create-account:hover {
+  background-color: #0096c7;
+  transform: scale(1.05);
 }
 
 .login-Google, .login-GitHub {
   display: flex;
   align-items: center;
-  padding: 0.5rem;
+  padding: 0.75rem;
   gap: 0.5rem;
   border: none;
-  border-radius: 4px;
-  background-color: #8ECAE6;
+  border-radius: 8px;
+  background-color: rgba(142, 202, 230, 0.481);
   color: #000000;
   cursor: pointer;
   margin-top: 1rem;
+  transition: background-color 0.3s ease-in-out, transform 0.3s ease-in-out;
+}
+
+.login-Google:hover, .login-GitHub:hover {
+  background-color: rgba(142, 202, 230, 0.7);
+  transform: scale(1.05);
 }
 
 .favicon-image {
   display: flex;
   align-items: center;
   margin-top: 2rem;
+  width: 50px;
+  height: 50px;
+  transition: transform 0.3s ease-in-out;
 }
+
+.favicon-image:hover {
+  transform: rotate(360deg);
+}
+
+.social-login-buttons {
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+}
+
 body, html {
   color: var(--foreground);
   background: var(--background);
@@ -108,6 +165,18 @@ body, html {
 
 .background {
   background: #f0f0f5;
+  background-image: -webkit-radial-gradient(top, circle cover, #ffffff 0%, #d0d0d5 80%);
+  background-image: -moz-radial-gradient(top, circle cover, #ffffff 0%, #d0d0d5 80%);
+  background-image: -o-radial-gradient(top, circle cover, #ffffff 0%, #d0d0d5 80%);
+  background-image: radial-gradient(top, circle cover, #ffffff 0%, #d0d0d5 80%);
+  overflow: auto;
+}
+
+.background-2 {
+  background: #f0f0f5;
+  background-image: -webkit-radial-gradient(top, circle cover, #ffffff 0%, #d0d0d5 80%);
+  background-image: -moz-radial-gradient(top, circle cover, #ffffff 0%, #d0d0d5 80%);
+  background-image: -o-radial-gradient(top, circle cover, #ffffff 0%, #d0d0d5 80%);
   background-image: radial-gradient(top, circle cover, #ffffff 0%, #d0d0d5 80%);
   overflow: auto;
 }
