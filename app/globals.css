@@ -295,3 +295,154 @@ body, html {
     0.8px 0.8px 0 var(--accent),
     1.0px 1.0px 0 var(--accent);
 }
+
+.Home-page {
+  display: flex;
+  background-color: #ffffff;
+  color: #000000;
+  font-family: 'Bree Serif', serif;
+  height: 100vh;
+}
+
+.home-heading {
+display: flex;
+font-size: 2rem;
+font-family: 'Bree Serif', serif;
+color: #202020;
+position: absolute;
+top: 5%;
+left: 50%;
+transform: translateX(-50%);
+text-align: center;
+text-shadow: 
+  0.5px 0.5px 0 var(--accent), 
+  1.5px 1.5px 0 var(--accent), 
+  2.5px 2.5px 0 var(--accent), 
+  3.5px 3.5px 0 var(--accent), 
+  4.5px 4.5px 0 var(--accent);
+}
+
+.Study-Planner {
+  display: flex;
+  font-size: 1.5em;
+  font-family: 'Bree Serif', serif;
+  color: #202020;
+  position: absolute;
+  top: 30%;
+  left: 20%;
+  text-align: center;
+  text-shadow: 
+    0.5px 0.5px 0 var(--accent), 
+    1.5px 1.5px 0 var(--accent), 
+    2.5px 2.5px 0 var(--accent), 
+    3.5px 3.5px 0 var(--accent), 
+    4.5px 4.5px 0 var(--accent);
+  }
+
+  .Timetable-Calendar {
+    display: flex;
+    font-size: 1.5em;
+    font-family: 'Bree Serif', serif;
+    color: #202020;
+    position: absolute;
+    top: 30%;
+    right: 20%;
+    text-align: center;
+    text-shadow: 
+      0.5px 0.5px 0 var(--accent), 
+      1.5px 1.5px 0 var(--accent), 
+      2.5px 2.5px 0 var(--accent), 
+      3.5px 3.5px 0 var(--accent), 
+      4.5px 4.5px 0 var(--accent);
+  }
+
+.AI-Bot {
+  display: flex;
+  font-size: 1.5em;
+  font-family: 'Bree Serif', serif;
+  color: #202020;
+  position: absolute;
+  top: 60%;
+  left: 20%;
+  text-align: center;
+  text-shadow: 
+    0.5px 0.5px 0 var(--accent), 
+    1.5px 1.5px 0 var(--accent), 
+    2.5px 2.5px 0 var(--accent), 
+    3.5px 3.5px 0 var(--accent), 
+    4.5px 4.5px 0 var(--accent);
+}
+
+.Essential-tools{ 
+  display: flex;
+  font-size: 1.5em;
+  font-family: 'Bree Serif', serif;
+  color: #202020;
+  position: absolute;
+  top: 60%;
+  right: 20%;
+  text-align: center;
+  text-shadow: 
+    0.5px 0.5px 0 var(--accent), 
+    1.5px 1.5px 0 var(--accent), 
+    2.5px 2.5px 0 var(--accent), 
+    3.5px 3.5px 0 var(--accent), 
+    4.5px 4.5px 0 var(--accent);
+}
+
+.bot-heading {
+  display: flex;
+  font-size: 2rem;
+  font-family: 'Bree Serif', serif;
+  color: #202020;
+  position: absolute;
+  top: 5%;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+  text-shadow: 
+    0.5px 0.5px 0 var(--accent), 
+    1.5px 1.5px 0 var(--accent), 
+    2.5px 2.5px 0 var(--accent), 
+    3.5px 3.5px 0 var(--accent), 
+    4.5px 4.5px 0 var(--accent);
+  }
+
+  .entry-statement {
+    display: flex;
+    font-size: 1rem;
+    font-family: 'Bree Serif', serif;
+    color: #202020;
+    position: absolute;
+    top: 20%;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+  }
+
+.question-box {
+  display: flex;
+  font-size: 1rem;
+  font-family: 'Bree Serif', serif;
+  color: #202020;
+  position: absolute;
+  top: 85%;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+  padding-left: 300px;
+  padding-right: 300px;
+}
+
+.answer {
+  display: flex;
+  font-size: 1rem;
+  font-family: 'Bree Serif', serif;
+  color: #202020;
+  position: absolute;
+  top: 25%;
+  left: 5%;
+  text-align: center;
+  padding-left: 300px;
+  padding-right: 300px;
+}
