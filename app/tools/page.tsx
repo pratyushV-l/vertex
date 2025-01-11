@@ -3,7 +3,6 @@
 import React, { useState } from 'react';
 import Meditation from '@/components/Meditation';
 import Quote from '@/components/Quote';
-import StickyNotes from '@/components/StickyNotes';
 import Timer from '@/components/Timer';
 import ActivityLog from '@/components/ActivityLog';
 import Calculator from '@/components/Calculator';
@@ -40,12 +39,6 @@ const Page = () => {
         </section>
         <section style={styles.section}>
           <Calculator onClose={() => {}} />
-        </section>
-        <section style={styles.section}>
-          <button onClick={() => setShowStickyNotes(true)} style={styles.stickyNotesButton}>
-            Open Sticky Notes
-          </button>
-          {showStickyNotes && <StickyNotes onClose={() => setShowStickyNotes(false)} />}
         </section>
       </main>
       <footer style={styles.footer}>
