@@ -488,6 +488,8 @@ text-shadow:
   cursor: pointer;
   box-shadow: 1.4px 1.4px 0 #00B4D8, 1.7px 1.7px 0 #00B4D8, 2.1px 2.1px 0 #00B4D8, 2.4px 2.4px 0 #00B4D8, 2.8px 2.8px 0 #00B4D8;
   transition: background-color 0.3s, color 0.3s;
+  position: absolute;
+  top: 92.5%;
 }
 
 .submit-button:hover {

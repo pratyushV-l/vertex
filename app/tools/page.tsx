@@ -10,7 +10,6 @@ import HabitTracker from '@/components/HabitTracker';
 import Image from 'next/image';
 
 const Page = () => {
-
   return (
     <div style={styles.container}>
       <header style={styles.header}>
@@ -18,7 +17,7 @@ const Page = () => {
           <Image src='/favicon.ico' width={50} height={50} alt="logo" />
           <span style={styles.logoText}>vertex.</span>
         </div>
-        <h1 style={styles.title}>Wellness Dashboard</h1>
+        <h1 style={styles.title}>Essential Tools</h1>
       </header>
       <main style={styles.main}>
         <section style={styles.section}>

@@ -24,6 +24,12 @@ export default function AIquerybot() {
     }
   };
 
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter") {
+      handleSubmit();
+    }
+  };
+
   return (
     <div className="ai-querybot-container">
       <h1 className="bot-heading">AI Query Bot</h1>
@@ -36,6 +42,7 @@ export default function AIquerybot() {
         className="question-box"
         value={question}
         onChange={handleInputChange}
+        onKeyDown={handleKeyDown}
       />
       <button className="submit-button" onClick={handleSubmit}>Submit</button>
       <p className="answer">Answer: {answer}</p>
