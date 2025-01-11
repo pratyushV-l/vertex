@@ -2,8 +2,9 @@
 
 import React, { useState } from "react";
 import { GoogleGenerativeAI } from "@google/generative-ai";
+import withAuth from '@/src/hoc/withAuth';
 
-export default function AIquerybot() {
+function AIquerybot() {
   const [question, setQuestion] = useState("");
   const [, setAnswer] = useState("");
   const [, setIsLoading] = useState(false);
@@ -67,3 +68,5 @@ export default function AIquerybot() {
     </div>
   );
 }
+
+export default withAuth(AIquerybot);

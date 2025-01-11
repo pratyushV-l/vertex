@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { auth } from '@/src/firebase-config';
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
+import Cookies from 'js-cookie';
 
 export default function LoginSignupPage() {
   const [isLogin, setIsLogin] = useState(true);
@@ -23,35 +24,35 @@ export default function LoginSignupPage() {
     if (isLogin) {
       signInWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
-          // Logged in
           const user = userCredential.user;
           console.log('User logged in:', user);
-          setError(null); // Clear error message on success
-          router.push('/Home-Page'); // Redirect to Home-Page
+          setError(null);
+          Cookies.set('logged_in', 'true'); // Set the cookie
+          router.push('/Home-Page');
         })
         .catch((error) => {
           const errorCode = error.code;
           const errorMessage = error.message;
           console.error('Error logging in:', errorCode, errorMessage);
-          setError(errorMessage); // Set error message
+          setError(errorMessage);
         });
-    } else {
-      createUserWithEmailAndPassword(auth, email, password)
-        .then((userCredential) => {
-          // Signed up
-          const user = userCredential.user;
-          console.log('User signed up:', user);
-          setError(null); // Clear error message on success
-          router.push('/Home-Page'); // Redirect to Home-Page
-        })
-        .catch((error) => {
-          const errorCode = error.code;
-          const errorMessage = error.message;
-          console.error('Error signing up:', errorCode, errorMessage);
-          setError(errorMessage); // Set error message
-        });
-    }
-  };
+      } else {
+        createUserWithEmailAndPassword(auth, email, password)
+          .then((userCredential) => {
+            const user = userCredential.user;
+            console.log('User signed up:', user);
+            setError(null);
+            Cookies.set('logged_in', 'true'); // Set the cookie
+            router.push('/Home-Page');
+          })
+          .catch((error) => {
+            const errorCode = error.code;
+            const errorMessage = error.message;
+            console.error('Error signing up:', errorCode, errorMessage);
+            setError(errorMessage);
+          });
+      }
+    };
 
   return (
     <div className="Login-Signup-page background-2">

@@ -8,6 +8,7 @@ import ActivityLog from '@/components/ActivityLog';
 import Calculator from '@/components/Calculator';
 import HabitTracker from '@/components/HabitTracker';
 import Image from 'next/image';
+import withAuth from '@/src/hoc/withAuth';
 
 const Page = () => {
   return (
@@ -102,4 +103,4 @@ const styles: { [key: string]: React.CSSProperties } = {
   },
 };
 
-export default Page;
+export default withAuth(Page);

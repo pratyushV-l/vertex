@@ -1,8 +1,9 @@
 "use client";
 
 import { useRouter } from 'next/navigation';
+import withAuth from '@/src/hoc/withAuth';
 
-export default function Homepage() {
+function Homepage() {
   const router = useRouter();
 
   return (
@@ -19,3 +20,5 @@ export default function Homepage() {
     </div>
   );
 }
+
+export default withAuth(Homepage);
