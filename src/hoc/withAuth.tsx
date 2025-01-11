@@ -3,12 +3,8 @@ import { useEffect } from 'react';
 import Cookies from 'js-cookie';
 import React from 'react';
 
-interface WithAuthProps {
-  [key: string]: any;
-}
-
-const withAuth = (WrappedComponent: React.ComponentType) => {
-  const ComponentWithAuth: React.FC<WithAuthProps> = (props) => {
+const withAuth = <P extends object>(WrappedComponent: React.ComponentType<P>) => {
+  const ComponentWithAuth: React.FC<P> = (props) => {
     const router = useRouter();
 
     useEffect(() => {
