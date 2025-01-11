@@ -6,12 +6,14 @@ import { GoogleGenerativeAI } from "@google/generative-ai";
 export default function AIquerybot() {
   const [question, setQuestion] = useState("");
   const [answer, setAnswer] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setQuestion(e.target.value);
   };
 
   const handleSubmit = async () => {
+    setIsLoading(true);
     try {
       const genAI = new GoogleGenerativeAI("AIzaSyDkyivo4KBcmjJN_ZB2qq7_1II34IAI_uk");
       const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
@@ -21,6 +23,8 @@ export default function AIquerybot() {
     } catch (error) {
       console.error("Error fetching the answer:", error);
       setAnswer("Sorry, I couldn't fetch the answer. Please try again.");
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -45,7 +49,9 @@ export default function AIquerybot() {
         onKeyDown={handleKeyDown}
       />
       <button className="submit-button" onClick={handleSubmit}>Submit</button>
-      <p className="answer">Answer: {answer}</p>
+      <p className="answer">
+        {isLoading ? "Loading..." : `Answer: ${answer}`}
+      </p>
     </div>
   );
 }
