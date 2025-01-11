@@ -1,7 +1,6 @@
 import { useRouter } from 'next/navigation';
 import { JSX, useEffect } from 'react';
 import Cookies from 'js-cookie';
-import React from 'react';
 
 const withAuth = (WrappedComponent: React.ComponentType) => {
   const ComponentWithAuth = (props: JSX.IntrinsicAttributes) => {
