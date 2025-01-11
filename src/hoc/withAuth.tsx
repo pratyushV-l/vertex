@@ -1,9 +1,14 @@
 import { useRouter } from 'next/navigation';
-import { JSX, useEffect } from 'react';
+import { useEffect } from 'react';
 import Cookies from 'js-cookie';
+import React from 'react';
+
+interface WithAuthProps {
+  [key: string]: any;
+}
 
 const withAuth = (WrappedComponent: React.ComponentType) => {
-  const ComponentWithAuth = (props: JSX.IntrinsicAttributes) => {
+  const ComponentWithAuth: React.FC<WithAuthProps> = (props) => {
     const router = useRouter();
 
     useEffect(() => {
