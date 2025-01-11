@@ -1,3 +1,22 @@
+@import url('https://fonts.googleapis.com/css2?family=Bree+Serif&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: #ededed;
+  --foreground: #202020;
+  --accent: rgba(24, 181, 212, 0.175);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #ededed;
+    --foreground: #202020;
+  }
+}
+
 .Login-Signup-page {
   display: flex;
   flex-direction: column;
@@ -40,4 +59,150 @@
   background-color: #8ECAE6;
   color: #000000;
   cursor: pointer;
+}
+
+body, html {
+  color: var(--foreground);
+  background: var(--background);
+  height: 100%;
+  font-family: Arial, Helvetica, sans-serif;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+.title {
+  font-size: 5em;
+  font-family: 'Bree Serif', serif;
+  color: #202020;
+  text-shadow: 
+    0.5px 0.5px 0 var(--accent), 
+    1.5px 1.5px 0 var(--accent), 
+    2.5px 2.5px 0 var(--accent), 
+    3.5px 3.5px 0 var(--accent), 
+    4.5px 4.5px 0 var(--accent);
+  position: absolute;
+  top: 45%;
+  left: 50%;
+  text-align: center;
+}
+
+.background {
+  background: #f0f0f5;
+  background-image: radial-gradient(top, circle cover, #ffffff 0%, #d0d0d5 80%);
+  overflow: auto;
+}
+
+.logotext {
+  font-family: 'Bree Serif', serif;
+  color: #202020;
+  text-shadow: 
+    0.0px 0.0px 0 var(--accent), 
+    0.3px 0.3px 0 var(--accent), 
+    0.6px 0.6px 0 var(--accent), 
+    0.9px 0.9px 0 var(--accent), 
+    1.2px 1.2px 0 var(--accent);
+}
+
+.start_button {
+  background-color: #202020;
+  color: #00B4D8; font-size: 1.2em;
+  font-family: 'Bree Serif', serif;
+  border-radius: 10px;
+  box-shadow: 
+    0.8px 0.8px 0 var(--accent), 
+    1.1px 1.1px 0 var(--accent), 
+    1.4px 1.4px 0 var(--accent), 
+    1.7px 1.7px 0 var(--accent),
+    2.1px 2.1px 0 var(--accent);
+}
+
+.startscroll {
+  font-size: 1.5em;
+  font-family: 'Bree Serif', serif;
+  color: #202020;
+  position: absolute;
+  top: 65%;
+  left: 39.0%;
+  text-align: center;
+  text-shadow: 
+    0.2px 0.2px 0 var(--accent),
+    0.4px 0.4px 0 var(--accent),
+    0.6px 0.6px 0 var(--accent),
+    0.8px 0.8px 0 var(--accent),
+    1.0px 1.0px 0 var(--accent);
+}
+
+.ticker-container {
+  position: absolute;
+  top: 19.28%;
+  width: 100%;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.ticker-container-2 {
+  position: absolute;
+  top: 81.28%;
+  width: 100%;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.ticker {
+  display: inline-block;
+  white-space: nowrap;
+  animation: ticker 30s linear infinite;
+}
+
+.ticker span{
+  display: inline-block;
+  padding-right: 2rem;
+  font-size: 1.0em;
+  font-family: 'Bree Serif', serif;
+  text-shadow: 
+    0.2px 0.2px 0 var(--accent),
+    0.4px 0.4px 0 var(--accent),
+    0.6px 0.6px 0 var(--accent),
+    0.8px 0.8px 0 var(--accent),
+    1.0px 1.0px 0 var(--accent);
+}
+
+@keyframes ticker {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.clicker {
+  animation: clicker 2s infinite;
+}
+
+@keyframes clicker {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.5);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.watermark {
+  position: absolute;
+  top: 95%;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 1.0em;
+  font-family: 'Bree Serif', serif;
+  text-shadow: 
+    0.2px 0.2px 0 var(--accent),
+    0.4px 0.4px 0 var(--accent),
+    0.6px 0.6px 0 var(--accent),
+    0.8px 0.8px 0 var(--accent),
+    1.0px 1.0px 0 var(--accent);
 }
