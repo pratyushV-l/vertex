@@ -25,6 +25,8 @@
     "pdfjs-dist": "^4.10.38",
     "pptx2json": "^0.0.10",
     "react": "^19.0.0",
+    "react-big-calendar": "^1.17.1",
+    "react-datepicker": "^7.6.0",
     "react-dom": "^19.0.0"
   },
   "devDependencies": {
@@ -35,6 +37,8 @@
     "@types/pdf-parse": "^1.1.4",
     "@types/pdfjs-dist": "^2.10.377",
     "@types/react": "^19.0.4",
+    "@types/react-big-calendar": "^1.16.0",
+    "@types/react-datepicker": "^6.2.0",
     "@types/react-dom": "^19",
     "eslint": "^9",
     "eslint-config-next": "15.1.3",

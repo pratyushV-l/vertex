@@ -728,9 +728,25 @@ text-shadow:
   cursor: pointer;
 }
 
+.popup input,
+.popup select,
+.popup button {
+  margin-bottom: 1rem;
+  padding: 0.5rem;
+  border: 1px solid var(--foreground);
+  border-radius: 8px;
+  width: 100%;
+}
+
+.popup button:hover {
+  background-color: var(--accent);
+  color: var(--foreground);
+}
+
 .loading-bar {
   height: 100%;
   background-color: #00B4D8;
   width: 0;
   transition: width 0.1s;
 }
+

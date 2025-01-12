@@ -21,26 +21,34 @@ const Calendar: React.FC = () => {
 
   const handleEventSubmit = async () => {
     const genAI = new GoogleGenerativeAI("AIzaSyDkyivo4KBcmjJN_ZB2qq7_1II34IAI_uk");
-    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+  const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 
-    const existingEvents = events.filter(event => new Date(event.date).toDateString() === selectedDate.toDateString());
-    const existingEventsJson = JSON.stringify(existingEvents);
+  const existingEvents = events.filter(event => new Date(event.date).toDateString() === selectedDate.toDateString());
+  const existingEventsJson = JSON.stringify(existingEvents);
 
-    const prompt = `You are an AI assistant helping to schedule events. The current date is ${selectedDate.toDateString()}. Here are the existing events for this date: ${existingEventsJson}. Convert the following event description into a JSON object with event name (2-3 words), timing (start and end in HH:MM format), and importance (low, medium, high). Only provide the JSON object and nothing else. Ensure the JSON is valid and properly formatted:\n${newEvent}`;
-    const result = await model.generateContent(prompt);
-    const responseText = result.response.text().trim();
+  const prompt = `You are an AI assistant helping to schedule events. The current date is ${selectedDate.toDateString()}. Here are the existing events for this date: ${existingEventsJson}. Convert the following event description into a JSON object with event name (2-3 words), timing (start and end in HH:MM format), and importance (low, medium, high). Only provide the JSON object and nothing else. Ensure the JSON is valid and properly formatted:\n${newEvent}`;
+  const result = await model.generateContent(prompt);
+  const responseText = result.response.text().trim();
 
-    try {
-      const eventJson = JSON.parse(responseText);
-      setEvents([...events, { ...eventJson, date: selectedDate }]);
-    } catch (error) {
-      console.error("Error parsing JSON:", error);
-      console.error("Response text:", responseText);
-    }
+  try {
+    const jsonString = responseText.replace(/```json|```/g, '').trim();
+    const eventJson = JSON.parse(jsonString);
+    const formattedEvent = {
+      name: eventJson["event name"],
+      start: eventJson.timing.start,
+      end: eventJson.timing.end,
+      importance: eventJson.importance,
+      date: selectedDate
+    };
+    setEvents([...events, formattedEvent]);
+  } catch (error) {
+    console.error("Error parsing JSON:", error);
+    console.error("Response text:", responseText);
+  }
 
-    setShowAddEventPopup(false);
-    setNewEvent("");
-  };
+  setShowAddEventPopup(false);
+  setNewEvent("");
+};
 
   const handleEventClick = (event: any) => {
     setEditingEvent(event);
