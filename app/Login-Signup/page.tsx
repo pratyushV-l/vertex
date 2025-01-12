@@ -84,7 +84,6 @@ export default function LoginSignupPage() {
             {isLogin ? "Don't have an Account? Create One" : 'Already have an Account? Login'}
           </button>
         </form>
-        <img src="/favicon.ico" alt="Favicon" className="favicon-image" />
       </div>
       <div className="ticker-container-3">
           <div className="ticker">

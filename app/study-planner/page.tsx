@@ -1,30 +1,45 @@
 "use client";
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { GoogleGenerativeAI } from "@google/generative-ai";
 
 const StudyPlanner = () => {
   const [fileContents, setFileContents] = useState<string[]>([]);
   const [responseContent, setResponseContent] = useState<string>("");
   const [isLoading, setIsLoading] = useState(false);
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
-  const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const files = e.target.files;
-    if (files) {
-      const readers = Array.from(files).map(file => {
-        return new Promise<string>((resolve, reject) => {
-          const reader = new FileReader();
-          reader.onload = (event) => {
-            resolve(event.target?.result as string);
-          };
-          reader.onerror = reject;
-          reader.readAsText(file);
-        });
+  const handleFileUpload = (files: FileList) => {
+    const readers = Array.from(files).map(file => {
+      return new Promise<string>((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = (event) => {
+          resolve(event.target?.result as string);
+        };
+        reader.onerror = reject;
+        reader.readAsText(file);
       });
+    });
 
-      Promise.all(readers)
-        .then(contents => setFileContents(contents))
-        .catch(error => console.error("Error reading files:", error));
+    Promise.all(readers)
+      .then(contents => setFileContents(prevContents => [...prevContents, ...contents]))
+      .catch(error => console.error("Error reading files:", error));
+  };
+
+  const handleFileInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files) {
+      handleFileUpload(e.target.files);
     }
+  };
+
+  const handleDrop = (e: React.DragEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    if (e.dataTransfer.files) {
+      handleFileUpload(e.dataTransfer.files);
+    }
+  };
+
+  const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => {
+    e.preventDefault();
   };
 
   const handleDownload = async () => {
@@ -63,9 +78,29 @@ const StudyPlanner = () => {
   return (
     <div className="study-planner-container">
       <h1 className="study-heading">Study Planner</h1>
-      <div className="drag-drop-box">
-        <p>Upload your .txt files here</p>
-        <input type="file" accept=".txt" multiple onChange={handleFileUpload} />
+      <div 
+        className="drag-drop-box" 
+        onDrop={handleDrop} 
+        onDragOver={handleDragOver}
+        onClick={() => fileInputRef.current?.click()}
+      >
+        <p>Drag and drop your .txt files here or click to upload</p>
+        <input 
+          type="file" 
+          accept=".txt" 
+          multiple 
+          onChange={handleFileInputChange} 
+          ref={fileInputRef} 
+          style={{ display: 'none' }} 
+        />
+      </div>
+      <div className="file-list">
+        {fileContents.map((content, index) => (
+          <div key={index} className="file-item">
+            <p>File {index + 1}</p>
+            <pre>{content}</pre>
+          </div>
+        ))}
       </div>
       <button className="download-button" onClick={handleDownload} disabled={isLoading}>
         {isLoading ? "Generating..." : "Download"}
