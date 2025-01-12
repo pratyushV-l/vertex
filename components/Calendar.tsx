@@ -7,10 +7,12 @@ import withAuth from '@/src/hoc/withAuth';
 const Calendar: React.FC = () => {
   const [selectedDate, setSelectedDate] = useState(new Date());
   interface Event {
+    id: string;
     name: string;
-    start: string;
-    end: string;
-    importance: 'low' | 'medium' | 'high';
+    title: string;
+    start: Date;
+    end: Date;
+    importance: string;
     date: Date;
   }
 
@@ -41,10 +43,12 @@ const Calendar: React.FC = () => {
   try {
     const jsonString = responseText.replace(/```json|```/g, '').trim();
     const eventJson = JSON.parse(jsonString);
-    const formattedEvent = {
+    const formattedEvent: Event = {
+      id: Math.random().toString(36).substr(2, 9),
       name: eventJson["event name"],
-      start: eventJson.timing.start,
-      end: eventJson.timing.end,
+      title: eventJson["event name"],
+      start: new Date(`${selectedDate.toDateString()} ${eventJson.timing.start}`),
+      end: new Date(`${selectedDate.toDateString()} ${eventJson.timing.end}`),
       importance: eventJson.importance,
       date: selectedDate
     };
@@ -58,7 +62,7 @@ const Calendar: React.FC = () => {
   setNewEvent("");
 };
 
-  const handleEventClick = (event: any) => {
+  const handleEventClick = (event: Event) => {
     setEditingEvent(event);
   };
 
@@ -77,11 +81,11 @@ const Calendar: React.FC = () => {
           <div className="time-label">{`${hour}:00`}</div>
           <div className="events">
             {events
-              .filter(event => new Date(event.date).toDateString() === selectedDate.toDateString() && parseInt(event.start.split(':')[0]) === hour)
+              .filter(event => new Date(event.date).toDateString() === selectedDate.toDateString() && event.start.getHours() === hour)
               .map((event, index) => (
                 <div key={index} className={`event ${event.importance}`} onClick={() => handleEventClick(event)}>
                   <p>{event.name}</p>
-                  <p>{event.start} - {event.end}</p>
+                  <p>{event.start.toLocaleTimeString()} - {event.end.toLocaleTimeString()}</p>
                 </div>
               ))}
           </div>
