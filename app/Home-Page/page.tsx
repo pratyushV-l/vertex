@@ -7,7 +7,9 @@ function Homepage() {
   const router = useRouter();
 
   return (
-    <div className="Home-page">
+    <div className="Home-page background">
+      <div className="triangle top-left"></div>
+      <div className="triangle bottom-right"></div>
       <h1 className="home-heading">Welcome to Vertex: The Ultimate Study Hub</h1>
       <button className="Study-Planner" onClick={() => router.push('/study-planner')}>Study Planner</button>
       <button className="Timetable-Calendar" onClick={() => router.push('/AI-Calendar')}>AI Calendar</button>

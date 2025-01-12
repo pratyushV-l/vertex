@@ -44,7 +44,7 @@ const Calendar: React.FC = () => {
     const jsonString = responseText.replace(/```json|```/g, '').trim();
     const eventJson = JSON.parse(jsonString);
     const formattedEvent: Event = {
-      id: Math.random().toString(36).substr(2, 9),
+      id: `${newEvent}`,
       name: eventJson["event name"],
       title: eventJson["event name"],
       start: new Date(`${selectedDate.toDateString()} ${eventJson.timing.start}`),
@@ -85,7 +85,10 @@ const Calendar: React.FC = () => {
               .map((event, index) => (
                 <div key={index} className={`event ${event.importance}`} onClick={() => handleEventClick(event)}>
                   <p>{event.name}</p>
-                  <p>{event.start.toLocaleTimeString()} - {event.end.toLocaleTimeString()}</p>
+                  <span id="info-row">
+                    <p>{event.id}</p>
+                    <p>{event.start.toLocaleTimeString()} - {event.end.toLocaleTimeString()}</p>
+                  </span>
                 </div>
               ))}
           </div>
@@ -94,7 +97,6 @@ const Calendar: React.FC = () => {
     }
     return timeSlots;
   };
-
   return (
     <div className="calendar-container">
       <div className="calendar-header">
