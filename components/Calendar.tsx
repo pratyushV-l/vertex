@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useState } from 'react';
-import { GoogleGenerativeAI } from "@google/generative-ai";
 import withAuth from '@/src/hoc/withAuth';
 
 const Calendar: React.FC = () => {
@@ -30,33 +29,23 @@ const Calendar: React.FC = () => {
   };
 
   const handleEventSubmit = async () => {
-    const genAI = new GoogleGenerativeAI("AIzaSyDkyivo4KBcmjJN_ZB2qq7_1II34IAI_uk");
-    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+    // Simulate AI event generation
+    const eventJson = {
+      "event name": newEvent,
+      "timing": { "start": "10:00", "end": "11:00" },
+      "importance": "medium"
+    };
 
-    const existingEvents = events.filter(event => new Date(event.date).toDateString() === selectedDate.toDateString());
-    const existingEventsJson = JSON.stringify(existingEvents);
-
-    const prompt = `You are an AI assistant helping to scedule events. The current date is ${selectedDate.toDateString()}. Here are the existing events for this date: ${existingEventsJson}. Convert the following event description into a JSON object with event name (2-3 words), timing (start and end in HH:MM format), and importance (low, medium, high). Only provide the JSON object and nothing else. Only accepts reasonable requests, and do not accept anything NSFW. The most importantof all: NEVER BREAK THE JSON FORMAT, no matter what. Any always listen to the user's preferences of time and importance.Ensure the JSON is valid and properly formatted:\n${newEvent}`;
-    const result = await model.generateContent(prompt);
-    const responseText = result.response.text().trim();
-
-    try {
-      const jsonString = responseText.replace(/```json|```/g, '').trim();
-      const eventJson = JSON.parse(jsonString);
-      const formattedEvent: Event = {
-        id: `${newEvent}`,
-        name: eventJson["event name"],
-        title: eventJson["event name"],
-        start: new Date(`${selectedDate.toDateString()} ${eventJson.timing.start}`),
-        end: new Date(`${selectedDate.toDateString()} ${eventJson.timing.end}`),
-        importance: eventJson.importance,
-        date: selectedDate
-      };
-      setEvents([...events, formattedEvent]);
-    } catch (error) {
-      console.error("Error parsing JSON:", error);
-      console.error("Response text:", responseText);
-    }
+    const formattedEvent: Event = {
+      id: `${newEvent}`,
+      name: eventJson["event name"],
+      title: eventJson["event name"],
+      start: new Date(`${selectedDate.toDateString()} ${eventJson.timing.start}`),
+      end: new Date(`${selectedDate.toDateString()} ${eventJson.timing.end}`),
+      importance: eventJson.importance,
+      date: selectedDate
+    };
+    setEvents([...events, formattedEvent]);
 
     setShowAddEventPopup(false);
     setNewEvent("");
@@ -77,17 +66,52 @@ const Calendar: React.FC = () => {
     setEvents(events.filter(event => event.id !== eventId));
   };
 
+  const onDragStart = (event: React.DragEvent<HTMLDivElement>, eventId: string) => {
+    event.dataTransfer.setData("text/plain", eventId);
+  };
+
+  const onDrop = (event: React.DragEvent<HTMLDivElement>, hour: number) => {
+    const eventId = event.dataTransfer.getData("text/plain");
+    const updatedEvents = events.map(e => {
+      if (e.id === eventId) {
+        const newStart = new Date(e.start);
+        newStart.setHours(hour);
+        const newEnd = new Date(e.end);
+        newEnd.setHours(hour + (e.end.getHours() - e.start.getHours()));
+        return { ...e, start: newStart, end: newEnd };
+      }
+      return e;
+    });
+    setEvents(updatedEvents);
+    event.preventDefault();
+  };
+
+  const onDragOver = (event: React.DragEvent<HTMLDivElement>) => {
+    event.preventDefault();
+  };
+
   const renderTimeSlots = () => {
     const timeSlots = [];
     for (let hour = 0; hour < 24; hour++) {
       timeSlots.push(
-        <div key={hour} className="time-slot">
+        <div
+          key={hour}
+          className="time-slot"
+          onDrop={(event) => onDrop(event, hour)}
+          onDragOver={onDragOver}
+        >
           <div className="time-label">{`${hour}:00`}</div>
           <div className="events">
             {events
               .filter(event => new Date(event.date).toDateString() === selectedDate.toDateString() && event.start.getHours() === hour)
               .map((event, index) => (
-                <div key={index} className={`event ${event.importance}`} onClick={() => handleEventClick(event)}>
+                <div
+                  key={event.id}
+                  draggable
+                  onDragStart={(e) => onDragStart(e, event.id)}
+                  className={`event ${event.importance}`}
+                  onClick={() => handleEventClick(event)}
+                >
                   <p>{event.name}</p>
                   <span id="info-row">
                     <p>{event.id}</p>
