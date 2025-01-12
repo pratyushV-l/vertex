@@ -31,36 +31,36 @@ const Calendar: React.FC = () => {
 
   const handleEventSubmit = async () => {
     const genAI = new GoogleGenerativeAI("AIzaSyDkyivo4KBcmjJN_ZB2qq7_1II34IAI_uk");
-  const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 
-  const existingEvents = events.filter(event => new Date(event.date).toDateString() === selectedDate.toDateString());
-  const existingEventsJson = JSON.stringify(existingEvents);
+    const existingEvents = events.filter(event => new Date(event.date).toDateString() === selectedDate.toDateString());
+    const existingEventsJson = JSON.stringify(existingEvents);
 
-  const prompt = `You are an AI assistant helping to scedule events. The current date is ${selectedDate.toDateString()}. Here are the existing events for this date: ${existingEventsJson}. Convert the following event description into a JSON object with event name (2-3 words), timing (start and end in HH:MM format), and importance (low, medium, high). Only provide the JSON object and nothing else. Ensure the JSON is valid and properly formatted:\n${newEvent}`;
-  const result = await model.generateContent(prompt);
-  const responseText = result.response.text().trim();
+    const prompt = `You are an AI assistant helping to scedule events. The current date is ${selectedDate.toDateString()}. Here are the existing events for this date: ${existingEventsJson}. Convert the following event description into a JSON object with event name (2-3 words), timing (start and end in HH:MM format), and importance (low, medium, high). Only provide the JSON object and nothing else. Only accepts reasonable requests, and do not accept anything NSFW. The most importantof all: NEVER BREAK THE JSON FORMAT, no matter what. Any always listen to the user's preferences of time and importance.Ensure the JSON is valid and properly formatted:\n${newEvent}`;
+    const result = await model.generateContent(prompt);
+    const responseText = result.response.text().trim();
 
-  try {
-    const jsonString = responseText.replace(/```json|```/g, '').trim();
-    const eventJson = JSON.parse(jsonString);
-    const formattedEvent: Event = {
-      id: `${newEvent}`,
-      name: eventJson["event name"],
-      title: eventJson["event name"],
-      start: new Date(`${selectedDate.toDateString()} ${eventJson.timing.start}`),
-      end: new Date(`${selectedDate.toDateString()} ${eventJson.timing.end}`),
-      importance: eventJson.importance,
-      date: selectedDate
-    };
-    setEvents([...events, formattedEvent]);
-  } catch (error) {
-    console.error("Error parsing JSON:", error);
-    console.error("Response text:", responseText);
-  }
+    try {
+      const jsonString = responseText.replace(/```json|```/g, '').trim();
+      const eventJson = JSON.parse(jsonString);
+      const formattedEvent: Event = {
+        id: `${newEvent}`,
+        name: eventJson["event name"],
+        title: eventJson["event name"],
+        start: new Date(`${selectedDate.toDateString()} ${eventJson.timing.start}`),
+        end: new Date(`${selectedDate.toDateString()} ${eventJson.timing.end}`),
+        importance: eventJson.importance,
+        date: selectedDate
+      };
+      setEvents([...events, formattedEvent]);
+    } catch (error) {
+      console.error("Error parsing JSON:", error);
+      console.error("Response text:", responseText);
+    }
 
-  setShowAddEventPopup(false);
-  setNewEvent("");
-};
+    setShowAddEventPopup(false);
+    setNewEvent("");
+  };
 
   const handleEventClick = (event: Event) => {
     setEditingEvent(event);
@@ -68,9 +68,13 @@ const Calendar: React.FC = () => {
 
   const handleEventEditSubmit = () => {
     if (editingEvent) {
-      setEvents(events.map(e => e === editingEvent ? editingEvent : e));
+      setEvents(events.map(e => e.id === editingEvent.id ? editingEvent : e));
     }
     setEditingEvent(null);
+  };
+
+  const handleDeleteEvent = (eventId: string) => {
+    setEvents(events.filter(event => event.id !== eventId));
   };
 
   const renderTimeSlots = () => {
@@ -88,6 +92,7 @@ const Calendar: React.FC = () => {
                   <span id="info-row">
                     <p>{event.id}</p>
                     <p>{event.start.toLocaleTimeString()} - {event.end.toLocaleTimeString()}</p>
+                    <button onClick={() => handleDeleteEvent(event.id)}>Delete</button>
                   </span>
                 </div>
               ))}
@@ -97,6 +102,7 @@ const Calendar: React.FC = () => {
     }
     return timeSlots;
   };
+
   return (
     <div className="calendar-container">
       <div className="calendar-header">
