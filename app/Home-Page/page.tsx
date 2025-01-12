@@ -9,8 +9,8 @@ function Homepage() {
   return (
     <div className="Home-page">
       <h1 className="home-heading">Welcome to Vertex: The Ultimate Study Hub</h1>
-      <button className="Study-Planner">Study Planner</button>
-      <button className="Timetable-Calendar">AI Calendar</button>
+      <button className="Study-Planner" onClick={() => router.push('/study-planner')}>Study Planner</button>
+      <button className="Timetable-Calendar" onClick={() => router.push('/AI-Calendar')}>AI Calendar</button>
       <button className="AI-Bot" onClick={() => router.push('/AI-Bot')}>
         Educational Query Bot
       </button>
