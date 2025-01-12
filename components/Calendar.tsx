@@ -104,7 +104,7 @@ const Calendar: React.FC = () => {
           <div className="events">
             {events
               .filter(event => new Date(event.date).toDateString() === selectedDate.toDateString() && event.start.getHours() === hour)
-              .map((event, index) => (
+              .map((event) => (
                 <div
                   key={event.id}
                   draggable
