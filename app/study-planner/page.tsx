@@ -4,7 +4,7 @@ import { GoogleGenerativeAI } from "@google/generative-ai";
 
 const StudyPlanner = () => {
   const [fileContents, setFileContents] = useState<string[]>([]);
-  const [responseContent, setResponseContent] = useState<string>("");
+  const [, setResponseContent] = useState<string>("");
   const [isLoading, setIsLoading] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
 

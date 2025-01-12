@@ -6,10 +6,18 @@ import withAuth from '@/src/hoc/withAuth';
 
 const Calendar: React.FC = () => {
   const [selectedDate, setSelectedDate] = useState(new Date());
-  const [events, setEvents] = useState<any[]>([]);
+  interface Event {
+    name: string;
+    start: string;
+    end: string;
+    importance: 'low' | 'medium' | 'high';
+    date: Date;
+  }
+
+  const [events, setEvents] = useState<Event[]>([]);
   const [showAddEventPopup, setShowAddEventPopup] = useState(false);
   const [newEvent, setNewEvent] = useState("");
-  const [editingEvent, setEditingEvent] = useState<any>(null);
+  const [editingEvent, setEditingEvent] = useState<Event | null>(null);
 
   const handleDateChange = (date: Date) => {
     setSelectedDate(date);
@@ -26,7 +34,7 @@ const Calendar: React.FC = () => {
   const existingEvents = events.filter(event => new Date(event.date).toDateString() === selectedDate.toDateString());
   const existingEventsJson = JSON.stringify(existingEvents);
 
-  const prompt = `You are an AI assistant helping to schedule events. The current date is ${selectedDate.toDateString()}. Here are the existing events for this date: ${existingEventsJson}. Convert the following event description into a JSON object with event name (2-3 words), timing (start and end in HH:MM format), and importance (low, medium, high). Only provide the JSON object and nothing else. Ensure the JSON is valid and properly formatted:\n${newEvent}`;
+  const prompt = `You are an AI assistant helping to scedule events. The current date is ${selectedDate.toDateString()}. Here are the existing events for this date: ${existingEventsJson}. Convert the following event description into a JSON object with event name (2-3 words), timing (start and end in HH:MM format), and importance (low, medium, high). Only provide the JSON object and nothing else. Ensure the JSON is valid and properly formatted:\n${newEvent}`;
   const result = await model.generateContent(prompt);
   const responseText = result.response.text().trim();
 
@@ -55,7 +63,9 @@ const Calendar: React.FC = () => {
   };
 
   const handleEventEditSubmit = () => {
-    setEvents(events.map(e => e === editingEvent ? editingEvent : e));
+    if (editingEvent) {
+      setEvents(events.map(e => e === editingEvent ? editingEvent : e));
+    }
     setEditingEvent(null);
   };
 
